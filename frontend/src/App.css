@@ -1,0 +1,150 @@
+.container {
+  height: 90vh;
+}
+
+@font-face {
+  font-family: "Ubuntu-Regular";
+  src: url("./fonts/Ubuntu-Regular.ttf");
+}
+
+@font-face {
+  font-family: "Ubuntu-Medium";
+  src: url("./fonts/Ubuntu-Medium.ttf");
+}
+
+@font-face {
+  font-family: "Ubuntu-Light";
+  src: url("./fonts/Ubuntu-Light.ttf");
+}
+
+* {
+  font-family: "Ubuntu-Regular";
+  font-size: 14px;
+}
+
+/* NavBar.jsx */
+
+@media (max-width: 600px) {
+  img {
+    height: 6vh !important;
+    width: 80px;
+  }
+  #previewImage {
+    display: none;
+  }
+}
+
+@media (max-width: 455px) {
+  img {
+    height: 4vh !important;
+    width: 40px;
+  }
+}
+@media (max-width: 368px) {
+  img {
+    height: 3vh !important;
+    width: 35px;
+  }
+}
+
+@media (max-width: 800px) {
+  #registration-form-container {
+    justify-content: center !important;
+  }
+  #login-form-container {
+    justify-content: center !important;
+  }
+}
+/* LoginPage.jsx */
+
+.flex-container {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+  height: 90vh;
+}
+
+.form-container {
+  background-color: #ffffffad;
+  padding: 30px 21px 30px 21px;
+  width: 400px;
+  box-shadow: 0 10px 10px 0 #00000080, 0 6px 20px 0 #00000080;
+}
+
+.h6-for-register {
+  font-family: "Ubuntu-Regular";
+}
+
+.a-to-register {
+  color: blue;
+  font-family: "Ubuntu-Regular";
+}
+
+.link-to-register {
+  color: blue;
+  text-decoration: none;
+}
+
+.h1-heading {
+  font-family: "Ubuntu-Medium";
+}
+
+.p-msg {
+  font-family: "Ubuntu-Light";
+  font-weight: 600;
+  /* color: gray; */
+}
+
+.field {
+  position: relative;
+  height: 45px;
+  width: 100%;
+  display: flex;
+  background: rgba(255, 255, 255, 0.94);
+}
+
+.field span {
+  color: #222;
+  width: 40px;
+  line-height: 45px;
+  margin-left: 20px;
+}
+
+.field input {
+  height: 100%;
+  width: 100%;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #222;
+}
+
+.space {
+  margin-top: 16px;
+}
+
+.a-for-recover-pass {
+  font-weight: bold;
+}
+
+.submitBtn {
+  background: #ff628f !important;
+  color: white !important;
+  height: 100%;
+  font-weight: bold;
+}
+
+/* MyChats.jsx */
+
+::-webkit-scrollbar {
+  width: 0px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(136, 136, 136, 0.281);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
