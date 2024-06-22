@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.6aa2e8ca.css",
-    "main.js": "/static/js/main.e80df05e.js",
+    "main.js": "/static/js/main.284c1211.js",
     "static/media/7368759_3612880.jpg": "/static/media/7368759_3612880.01cb55b99b4619a04e18.jpg",
     "static/media/Ubuntu-Light.ttf": "/static/media/Ubuntu-Light.0dd2d5986e2731a16ee7.ttf",
     "static/media/Ubuntu-Regular.ttf": "/static/media/Ubuntu-Regular.1cbb1b79a23478cc89ad.ttf",
@@ -10,10 +10,10 @@
     "static/media/brand-logo.png": "/static/media/brand-logo.98be0b392fe36fde2236.png",
     "index.html": "/index.html",
     "main.6aa2e8ca.css.map": "/static/css/main.6aa2e8ca.css.map",
-    "main.e80df05e.js.map": "/static/js/main.e80df05e.js.map"
+    "main.284c1211.js.map": "/static/js/main.284c1211.js.map"
   },
   "entrypoints": [
     "static/css/main.6aa2e8ca.css",
-    "static/js/main.e80df05e.js"
+    "static/js/main.284c1211.js"
   ]
 }
