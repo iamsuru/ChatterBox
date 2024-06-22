@@ -38,7 +38,7 @@ const GroupChatModal = ({ children }) => {
 
         try {
             setLoading(true)
-            const response = await fetch(`/api/user/search-user?search=${search}`, {
+            const response = await fetch(`https://chatterbox-server-qa7d.onrender.com/api/user/search-user?search=${search}`, {
                 method: 'GET',
                 headers: {
                     Authorization: `Bearer ${token}`
@@ -91,7 +91,7 @@ const GroupChatModal = ({ children }) => {
             .then(async (snapshot) => {
                 let profilePicture = await getDownloadURL(profilePicturePath)
                 try {
-                    const response = await fetch('/api/chat/create-group-chat', {
+                    const response = await fetch('https://chatterbox-server-qa7d.onrender.com/api/chat/create-group-chat', {
                         method: 'POST',
                         headers: {
                             Authorization: `Bearer ${token}`,

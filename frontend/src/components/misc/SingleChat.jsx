@@ -11,7 +11,7 @@ import Lottie from 'react-lottie'
 import animationData from '../../animations/TypingAnimation.json'
 import io from 'socket.io-client'
 import { Form } from 'reactstrap'
-const ENDPOINT = 'https://chatterbox-wy0q.onrender.com/'
+const ENDPOINT = 'https://chatterbox-server-qa7d.onrender.com'
 // const ENDPOINT = 'http://localhost:2500'
 var socket, selectedChatCompare;
 
@@ -78,7 +78,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
             socket.emit('stop typing', selectedChat._id)
             try {
                 setNewMessage("")
-                const response = await fetch('/api/message', {
+                const response = await fetch('https://chatterbox-server-qa7d.onrender.com/api/message', {
                     method: 'POST',
                     headers: {
                         'Content-Type': "application/json",
@@ -122,7 +122,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
 
         try {
             setLoading(true)
-            const response = await fetch(`/api/message/${selectedChat._id}`, {
+            const response = await fetch(`https://chatterbox-server-qa7d.onrender.com/api/message/${selectedChat._id}`, {
                 method: 'GET',
                 headers: {
                     Authorization: `Bearer ${token}`

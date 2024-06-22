@@ -15,7 +15,7 @@ const ChatProvider = ({ children }) => {
     useEffect(() => {
         const isTokenExpired = async (toCheck) => {
             try {
-                const response = await fetch('/api/user/isTokenExpired', {
+                const response = await fetch('https://chatterbox-server-qa7d.onrender.com/api/user/isTokenExpired', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',

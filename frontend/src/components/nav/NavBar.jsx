@@ -44,7 +44,7 @@ const NavBar = () => {
         }
         try {
             setLoading(true);
-            const response = await fetch(`/api/user/search-user?search=${search}`, {
+            const response = await fetch(`https://chatterbox-server-qa7d.onrender.com/api/user/search-user?search=${search}`, {
                 method: 'GET',
                 headers: {
                     Authorization: `Bearer ${token}`
@@ -70,7 +70,7 @@ const NavBar = () => {
         setSearchResult([]);
         try {
             setLoadingChat(true);
-            const response = await fetch('/api/chat/access-chat', {
+            const response = await fetch('https://chatterbox-server-qa7d.onrender.com/api/chat/access-chat', {
                 method: 'POST',
                 headers: {
                     "Content-type": "application/json",

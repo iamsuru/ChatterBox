@@ -46,7 +46,7 @@ const RegistrationPage = () => {
                         profilePicture = "https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg"
                     }
                     try {
-                        const response = await fetch("/api/user/register", {
+                        const response = await fetch("https://chatterbox-server-qa7d.onrender.com/api/user/register", {
                             method: 'POST',
                             headers: {
                                 'Content-Type': 'application/json',

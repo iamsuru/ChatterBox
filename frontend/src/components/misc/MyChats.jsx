@@ -17,7 +17,7 @@ const MyChats = ({ fetchAgain }) => {
 
     const fetchChats = async () => {
         try {
-            const response = await fetch('/api/chat/fetch-chat', {
+            const response = await fetch('https://chatterbox-server-qa7d.onrender.com/api/chat/fetch-chat', {
                 method: 'GET',
                 headers: {
                     Authorization: `Bearer ${token}`,

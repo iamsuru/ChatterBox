@@ -17,7 +17,7 @@ app.use(express.json()) //to accept json data
 app.use(express.urlencoded({ extended: false }))
 
 app.use(cors({
-    origin: '*',
+    origin: 'https://web-chatterbox.netlify.app',
     methods: 'GET,PUT,POST',
     allowedHeaders: '*'
 }))
@@ -48,7 +48,7 @@ const server = app.listen(PORT, () => {
 const io = require('socket.io')(server, {
     pingTimeout: 60000,
     cors: {
-        origin: "*"
+        origin: "https://web-chatterbox.netlify.app"
     }
 })
 

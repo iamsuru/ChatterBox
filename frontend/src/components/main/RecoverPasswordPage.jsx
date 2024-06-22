@@ -20,7 +20,7 @@ const RecoverPasswordPage = () => {
         setLoading(true)
         if (password === confirmPassword) {
             try {
-                const response = await fetch("/api/user/recover-password", {
+                const response = await fetch("https://chatterbox-server-qa7d.onrender.com/api/user/recover-password", {
                     method: 'PUT',
                     headers: {
                         'Content-Type': 'application/json',

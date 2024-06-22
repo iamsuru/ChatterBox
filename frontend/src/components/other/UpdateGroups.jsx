@@ -32,7 +32,7 @@ const UpdateGroups = ({ fetchAgain, setFetchAgain, fetchMessages }) => {
 
         try {
             setLoading(true);
-            const response = await fetch(`/api/chat/remove-individual-from-group`, {
+            const response = await fetch(`https://chatterbox-server-qa7d.onrender.com/api/chat/remove-individual-from-group`, {
                 method: 'PUT',
                 headers: {
                     Authorization: `Bearer ${token}`,
@@ -94,7 +94,7 @@ const UpdateGroups = ({ fetchAgain, setFetchAgain, fetchMessages }) => {
         try {
             setRenameLoading(true)
 
-            const response = await fetch('/api/chat/rename-group-chat', {
+            const response = await fetch('https://chatterbox-server-qa7d.onrender.com/api/chat/rename-group-chat', {
                 method: 'PUT',
                 headers: {
                     Authorization: `Bearer ${token}`,
@@ -149,7 +149,7 @@ const UpdateGroups = ({ fetchAgain, setFetchAgain, fetchMessages }) => {
 
         try {
             setLoading(true)
-            const response = await fetch(`/api/user/search-user?search=${search}`, {
+            const response = await fetch(`https://chatterbox-server-qa7d.onrender.com/api/user/search-user?search=${search}`, {
                 method: 'GET',
                 headers: {
                     Authorization: `Bearer ${token}`
@@ -198,7 +198,7 @@ const UpdateGroups = ({ fetchAgain, setFetchAgain, fetchMessages }) => {
         try {
             setLoading(true);
 
-            const response = await fetch('/api/chat/add-individual-to-group', {
+            const response = await fetch('https://chatterbox-server-qa7d.onrender.com/api/chat/add-individual-to-group', {
                 method: 'PUT',
                 headers: {
                     Authorization: `Bearer ${token}`,
