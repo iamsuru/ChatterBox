@@ -17,8 +17,8 @@ app.use(express.json()) //to accept json data
 app.use(express.urlencoded({ extended: false }))
 
 app.use(cors({
-    origin: 'https://web-chatterbox.netlify.app',
-    methods: 'GET,PUT,POST',
+    origin: "https://web-chatterbox.netlify.app",
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: '*'
 }))
 

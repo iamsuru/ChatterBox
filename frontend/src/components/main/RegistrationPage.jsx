@@ -3,8 +3,6 @@ import { Link, useNavigate } from 'react-router-dom'
 import { Form, Input as FileInput } from 'reactstrap'
 import { useToast, Input, InputLeftElement, InputGroup, RadioGroup, Stack, Radio, FormLabel, Button } from '@chakra-ui/react'
 import { AtSignIcon, EmailIcon, LockIcon } from '@chakra-ui/icons'
-import { getDownloadURL, ref, uploadBytes } from 'firebase/storage'
-import { fileDatabase } from '../../scripts/firebaseConfig'
 import PreviewImage from '../misc/PreviewImage'
 import { BeatLoader } from 'react-spinners'
 
@@ -18,7 +16,7 @@ const RegistrationPage = () => {
     const [gender, setGender] = useState();
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState();
-    const [picture, setPicture] = useState();
+    const [picture, setPicture] = useState(null);
 
     const handleUsername = (e) => {
         const usernameValue = e.target.value;
@@ -33,104 +31,77 @@ const RegistrationPage = () => {
 
     const createUser = async (e) => {
         e.preventDefault();
-        setLoading(true)
-        document.getElementById("email").style.border = "none"
-        document.getElementById("username").style.border = "none"
+        setLoading(true);
+        document.getElementById("email").style.border = "none";
+        document.getElementById("username").style.border = "none";
+
         try {
-            const profilePicturePath = ref(fileDatabase, `ProfilePicture/${username}/image`)
+            const formData = new FormData();
+            formData.append('name', name);
+            formData.append('email_id', email_id.trim().toLowerCase());
+            formData.append('gender', gender);
+            formData.append('username', username.trim().toLowerCase());
+            formData.append('password', password);
+            formData.append('file', picture);
 
-            await uploadBytes(profilePicturePath, picture)
-                .then(async (snapshot) => {
-                    let profilePicture = await getDownloadURL(profilePicturePath)
-                    if (!picture) {
-                        profilePicture = "https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg"
-                    }
-                    try {
-                        const response = await fetch("https://chatterbox-server-qa7d.onrender.com/api/user/register", {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json',
-                            },
-                            body: JSON.stringify({ name: name.trim(), email_id: email_id.trim().toLowerCase(), gender, username: username.trim().toLowerCase(), password, profilePicture })
-                        })
+            const response = await fetch("https://chatterbox-server-qa7d.onrender.com/api/user/register", {
+                method: 'POST',
+                body: formData
+            });
 
-                        const data = await response.json();
+            const data = await response.json();
 
-                        if (response.status === 201) {
-                            toast({
-                                title: data.message,
-                                status: 'success',
-                                duration: "2000",
-                                isClosable: false,
-                                position: 'top'
-                            })
-                            setTimeout(() => {
-                                navigate('/')
-                            }, 2500)
-
-                        } else if (response.status === 409 && data.message.includes('Email')) {
-                            toast({
-                                title: data.message,
-                                status: 'warning',
-                                duration: "2000",
-                                isClosable: false,
-                                position: 'top'
-                            })
-                            document.getElementById("email").style.border = "3px solid red"
-                        } else if (response.status === 409 && data.message.includes('Username')) {
-                            toast({
-                                title: data.message,
-                                status: 'warning',
-                                duration: "2000",
-                                isClosable: false,
-                                position: 'top'
-                            })
-                            document.getElementById("username").style.border = "3px solid red"
-                        }
-                        else if (response.status === 400) {
-                            toast({
-                                title: data.message,
-                                status: 'error',
-                                duration: "2000",
-                                isClosable: false,
-                                position: 'top'
-                            })
-                        }
-                        setLoading(false)
-                    }
-                    catch (error) {
-                        toast({
-                            title: error,
-                            status: 'error',
-                            duration: "2000",
-                            isClosable: false,
-                            position: 'top'
-                        })
-                        setLoading(false)
-                    }
-                })
-                .catch((error) => {
-                    toast({
-                        title: 'Error Uploading File',
-                        description: error.message,
-                        status: 'error',
-                        duration: "2000",
-                        isClosable: false,
-                        position: 'top'
-                    })
-                    setLoading(false)
-                })
+            if (response.status === 201) {
+                toast({
+                    title: data.message,
+                    status: 'success',
+                    duration: 2000,
+                    isClosable: false,
+                    position: 'top'
+                });
+                setTimeout(() => {
+                    navigate('/');
+                }, 2500);
+            } else if (response.status === 409 && data.message.includes('Email')) {
+                toast({
+                    title: data.message,
+                    status: 'warning',
+                    duration: 2000,
+                    isClosable: false,
+                    position: 'top'
+                });
+                document.getElementById("email").style.border = "3px solid red";
+            } else if (response.status === 409 && data.message.includes('Username')) {
+                toast({
+                    title: data.message,
+                    status: 'warning',
+                    duration: 2000,
+                    isClosable: false,
+                    position: 'top'
+                });
+                document.getElementById("username").style.border = "3px solid red";
+            } else if (response.status === 400) {
+                toast({
+                    title: data.message,
+                    status: 'error',
+                    duration: 2000,
+                    isClosable: false,
+                    position: 'top'
+                });
+            }
+            setLoading(false);
         } catch (error) {
             toast({
-                title: error,
+                title: error.message,
                 status: 'error',
-                duration: "2000",
+                duration: 2000,
                 isClosable: false,
                 position: 'top'
-            })
-            setLoading(false)
+            });
+            setLoading(false);
         }
     }
+
     return (
         <div className='container'>
             <div className='row'>
@@ -204,7 +175,7 @@ const RegistrationPage = () => {
                                 <div className="mt-4" style={{ display: 'flex', alignItems: 'center' }}>
                                     <label htmlFor="profilePicture" className="form-label" style={{ marginRight: '1rem' }}>Profile Picture</label>
                                     <div className='ms-5'>
-                                        <FileInput type="file" id="profilePicture" onChange={(e) => setPicture(e.target.files[0])} />
+                                        <FileInput type="file" accept="image/*" id="profilePicture" onChange={(e) => setPicture(e.target.files[0])} />
                                     </div>
                                 </div>
 

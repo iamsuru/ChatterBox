@@ -5,6 +5,9 @@ const validator = require("email-validator")
 const { generateToken } = require("../src/helper/generateToken")
 const User = require("../src/models/userModel")
 
+const { getStorage, ref, uploadBytes, getDownloadURL } = require('firebase/storage');
+
+const fileStorage = require("../src/db/firebaseConfig")
 
 const Login = async (req, res) => {
     const { identifier, password } = req.body
@@ -45,49 +48,65 @@ const Login = async (req, res) => {
 
 
 const Register = async (req, res) => {
-    const { name, email_id, gender, username, password, profilePicture } = req.body;
+    const { name, email_id, gender, username, password } = req.body;
+    const file = req.file;
 
-    bcrypt.hash(password, 10, async (err, hash) => {
-        if (err) {
-            res.status(500).json({
-                message: 'Error occurred while hashing the password'
-            })
-        } else {
-            const new_user = await User.create({
-                name,
-                email_id,
-                gender,
-                username: username.toLowerCase(),
-                password: hash,
-                profilePicture
-            })
-                .then((new_user) => {
-                    res.status(201).json({
-                        message: 'Registered Successfully',
-                    })
+    try {
+        let profilePicture = "https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg";
+
+        if (file) {
+            const profilePicturePath = ref(fileStorage, `ProfilePicture/${username}/image`)
+
+            const metadata = {
+                contentType: 'image/jpeg',
+            };
+
+            await uploadBytes(profilePicturePath, file.buffer, metadata)
+                .then(async (snapshot) => {
+                    profilePicture = await getDownloadURL(profilePicturePath)
                 })
-                .catch((err) => {
-                    if (err.code === 11000 && err.keyPattern && err.keyValue) {
-                        const duplicateField = Object.keys(err.keyPattern)[0];
-                        if (duplicateField == "email_id") {
-                            res.status(409).json({
-                                message: `Email already in use.`
-                            })
-                        } else {
-                            res.status(409).json({
-                                message: `Username aready taken.`
-                            })
-                        }
-                    }
-                    else {
-                        res.status(400).json({
-                            message: `Error Occurred ${err}`
-                        });
-                    }
+                .catch((error) => {
+                    return res.status(400).json({ message: error })
                 })
         }
-    })
-}
+
+        const hashedPassword = await bcrypt.hash(password, 10);
+
+        const newUser = await User.create({
+            name,
+            email_id,
+            gender,
+            username: username.toLowerCase(),
+            password: hashedPassword,
+            profilePicture
+        });
+
+        res.status(201).json({
+            message: 'Registered Successfully',
+        });
+    } catch (err) {
+        if (err.code === 11000 && err.keyPattern && err.keyValue) {
+            const duplicateField = Object.keys(err.keyPattern)[0];
+            if (duplicateField === "email_id") {
+                res.status(409).json({
+                    message: 'Email already in use.'
+                });
+            } else {
+                res.status(409).json({
+                    message: 'Username already taken.'
+                });
+            }
+        } else if (err.message && err.message.includes('hashing the password')) {
+            res.status(500).json({
+                message: 'Error occurred while hashing the password'
+            });
+        } else {
+            res.status(400).json({
+                message: `Error occurred: ${err.message}`
+            });
+        }
+    }
+};
 
 const isTokenExpired = async (req, res) => {
     const { token } = req.body

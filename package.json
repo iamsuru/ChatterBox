@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "start": "node backend/server.js",
-    "server":"nodemon backend/server.js",
+    "server": "nodemon backend/server.js",
     "build": "npm install --legacy-peer-deps && npm install --legacy-peer-deps --prefix frontend && npm run build --legacy-peer-deps --prefix frontend"
   },
   "author": "Suryansh Shrivastava",
@@ -16,8 +16,10 @@
     "dotenv": "^16.4.5",
     "email-validator": "^2.0.4",
     "express": "^4.19.1",
+    "firebase": "^10.12.2",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.2.3",
+    "multer": "^1.4.5-lts.1",
     "nodemon": "^3.1.0",
     "socket.io": "^4.7.5"
   },

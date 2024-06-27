@@ -73,7 +73,7 @@ const LoginPage = () => {
             setLoading(false)
         } catch (error) {
             toast({
-                title: error,
+                title: error.message,
                 status: 'error',
                 duration: "2000",
                 isClosable: false,
